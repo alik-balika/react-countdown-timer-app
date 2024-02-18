@@ -1,7 +1,10 @@
-import { ThemeProvider, createTheme, responsiveFontSizes } from "@mui/material";
 import React from "react";
-import PageHeader from "./components/PageHeader";
+import { ThemeProvider, createTheme, responsiveFontSizes } from "@mui/material";
 import { blue, orange } from "@mui/material/colors";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+
+import PageHeader from "./components/PageHeader";
 import PageContent from "./components/PageContent";
 
 let theme = responsiveFontSizes(
@@ -21,8 +24,10 @@ const App = () => {
   return (
     <div>
       <ThemeProvider theme={theme}>
-        <PageHeader />
-        <PageContent />
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <PageHeader />
+          <PageContent />
+        </LocalizationProvider>
       </ThemeProvider>
     </div>
   );
