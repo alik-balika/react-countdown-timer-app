@@ -3,28 +3,30 @@ import { Box, IconButton, Paper, Stack, Typography } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import TimeDisplay from "./TimeDisplay";
 
-// const paperStyle = {};
-
 const Event = () => {
   return (
     <Paper
       elevation={8}
       sx={{
         m: 3,
-        p: 3,
+        pt: 2,
+        pl: 2,
+        pb: 1,
         maxWidth: "sm",
       }}
     >
-      <Typography variant="h5">Event Name</Typography>
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-        <Stack direction="row">
-          <TimeDisplay type="Days" time={21} />
-          <TimeDisplay type="Hours" time={16} />
-          <TimeDisplay type="Minutes" time={44} />
-          <TimeDisplay type="Seconds" time={32} />
-        </Stack>
+        <Box>
+          <Typography variant="h5">Event Name</Typography>
+          <Stack direction="row">
+            <TimeDisplay type="Days" time={21} />
+            <TimeDisplay type="Hours" time={16} />
+            <TimeDisplay type="Minutes" time={44} />
+            <TimeDisplay type="Seconds" time={32} />
+          </Stack>
+        </Box>
         <IconButton aria-label="delete" color="secondary" size="large">
-          <DeleteIcon />
+          <DeleteIcon sx={{ fontSize: 40 }} />
         </IconButton>
       </Box>
     </Paper>
