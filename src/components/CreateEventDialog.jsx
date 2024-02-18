@@ -69,8 +69,16 @@ const CreateEventDialog = ({ open, setOpen }) => {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setOpen(false)}>Cancel</Button>
-          <Button type="submit">Create</Button>
+          <Button
+            onClick={() => setOpen(false)}
+            variant="outlined"
+            color="secondary"
+          >
+            Cancel
+          </Button>
+          <Button type="submit" variant="contained">
+            Create
+          </Button>
         </DialogActions>
       </Dialog>
     </>
