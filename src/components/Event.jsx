@@ -12,18 +12,42 @@ const NUMBER_OF_MILLISECONDS_IN_AN_HOUR =
 const NUMBER_OF_MILLISECONDS_IN_A_MINUTE =
   NUMBER_OF_MILLISECONDS_IN_A_SECOND * 60;
 
-const Event = ({ eventDate }) => {
-  // const [date, setDate] = useState(new Date(eventDate));
+const Event = ({ event }) => {
+  const daysRemaining = (difference) => {
+    return Math.floor(difference / NUMBER_OF_MILLISECONDS_IN_A_DAY);
+  };
+
+  const hoursRemaining = (difference) => {
+    return Math.floor(
+      (difference % NUMBER_OF_MILLISECONDS_IN_A_DAY) /
+        NUMBER_OF_MILLISECONDS_IN_AN_HOUR
+    );
+  };
+
+  const minutesRemaining = (difference) => {
+    return Math.floor(
+      (difference % NUMBER_OF_MILLISECONDS_IN_AN_HOUR) /
+        NUMBER_OF_MILLISECONDS_IN_A_MINUTE
+    );
+  };
+
+  const secondsRemaining = (difference) => {
+    return Math.floor(
+      (difference % NUMBER_OF_MILLISECONDS_IN_A_MINUTE) /
+        NUMBER_OF_MILLISECONDS_IN_A_SECOND
+    );
+  };
+
   const [timeLeft, setTimeLeft] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
+    days: daysRemaining(new Date(event.date) - Date.now()),
+    hours: hoursRemaining(new Date(event.date) - Date.now()),
+    minutes: minutesRemaining(new Date(event.date) - Date.now()),
+    seconds: secondsRemaining(new Date(event.date) - Date.now()),
   });
 
   useEffect(() => {
     const interval = setInterval(() => {
-      const difference = new Date(eventDate) - Date.now();
+      const difference = new Date(event.date) - Date.now();
 
       if (difference <= 0) {
         setTimeLeft({
@@ -32,36 +56,19 @@ const Event = ({ eventDate }) => {
           minutes: 0,
           seconds: 0,
         });
+        return;
       }
 
-      const daysRemaining = Math.floor(
-        difference / NUMBER_OF_MILLISECONDS_IN_A_DAY
-      );
-
-      const hoursRemaining = Math.floor(
-        (difference % NUMBER_OF_MILLISECONDS_IN_A_DAY) /
-          NUMBER_OF_MILLISECONDS_IN_AN_HOUR
-      );
-
-      const minutesRemaining = Math.floor(
-        (difference % NUMBER_OF_MILLISECONDS_IN_AN_HOUR) /
-          NUMBER_OF_MILLISECONDS_IN_A_MINUTE
-      );
-      const secondsRemaining = Math.floor(
-        (difference % NUMBER_OF_MILLISECONDS_IN_A_MINUTE) /
-          NUMBER_OF_MILLISECONDS_IN_A_SECOND
-      );
-
       setTimeLeft({
-        days: daysRemaining,
-        hours: hoursRemaining,
-        minutes: minutesRemaining,
-        seconds: secondsRemaining,
+        days: daysRemaining(difference),
+        hours: hoursRemaining(difference),
+        minutes: minutesRemaining(difference),
+        seconds: secondsRemaining(difference),
       });
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [eventDate]);
+  }, [event]);
 
   return (
     <Paper
@@ -76,7 +83,7 @@ const Event = ({ eventDate }) => {
     >
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
         <Box>
-          <Typography variant="h5">Event Name</Typography>
+          <Typography variant="h5">{event.name}</Typography>
           <Stack direction="row">
             <TimeDisplay type="Days" time={timeLeft.days} />
             <TimeDisplay type="Hours" time={timeLeft.hours} />
@@ -93,7 +100,7 @@ const Event = ({ eventDate }) => {
 };
 
 Event.propTypes = {
-  eventDate: PropTypes.string.isRequired,
+  event: PropTypes.object.isRequired,
 };
 
 export default Event;

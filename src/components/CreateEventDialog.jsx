@@ -35,7 +35,11 @@ const CreateEventDialog = ({ open, setOpen, onEventAdded }) => {
             event.preventDefault();
             const formData = new FormData(event.currentTarget);
             const formJson = Object.fromEntries(formData.entries());
-            // const date = new Date(formJson.eventDate);
+            const newEvent = {
+              name: formJson.eventName,
+              date: formJson.eventDate,
+            };
+            onEventAdded((prevEvents) => [newEvent, ...prevEvents]);
             setOpen(false);
           },
         }}
@@ -95,6 +99,7 @@ const CreateEventDialog = ({ open, setOpen, onEventAdded }) => {
 CreateEventDialog.propTypes = {
   open: PropTypes.bool.isRequired,
   setOpen: PropTypes.func.isRequired,
+  onEventAdded: PropTypes.func.isRequired,
 };
 
 export default CreateEventDialog;

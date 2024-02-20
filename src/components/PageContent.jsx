@@ -7,9 +7,7 @@ import Event from "./Event";
 
 const PageContent = () => {
   const [open, setOpen] = useState(false);
-  const [events, setEvents] = useState([
-    "Tue Feb 20 2024 00:00:00 GMT-0800 (Pacific Standard Time)",
-  ]);
+  const [events, setEvents] = useState([]);
 
   return (
     <Box>
@@ -47,10 +45,9 @@ const PageContent = () => {
         </Typography>
       ) : (
         <Box sx={{ mt: 4 }}>
-          {events.map((eventDate) => {
-            return <Event key={eventDate} eventDate={eventDate} />;
+          {events.map((event) => {
+            return <Event key={event.name} event={event} />;
           })}
-          {/* <Event eventDate={"Test"} /> */}
         </Box>
       )}
     </Box>
@@ -58,8 +55,3 @@ const PageContent = () => {
 };
 
 export default PageContent;
-
-/**
- *
- * events = ["Tue Feb 20 2024 00:00:00 GMT-0800 (Pacific Standard Time)", ...]
- */
