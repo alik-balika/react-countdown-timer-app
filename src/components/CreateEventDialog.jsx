@@ -12,12 +12,15 @@ import {
 } from "@mui/material";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import CloseIcon from "@mui/icons-material/Close";
+import dayjs from "dayjs";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const CreateEventDialog = ({ open, setOpen }) => {
+const tomorrow = dayjs().add(1, "day").startOf("day");
+
+const CreateEventDialog = ({ open, setOpen, onEventAdded }) => {
   return (
     <>
       <Dialog
@@ -32,7 +35,7 @@ const CreateEventDialog = ({ open, setOpen }) => {
             event.preventDefault();
             const formData = new FormData(event.currentTarget);
             const formJson = Object.fromEntries(formData.entries());
-            console.log(formJson);
+            // const date = new Date(formJson.eventDate);
             setOpen(false);
           },
         }}
@@ -64,8 +67,12 @@ const CreateEventDialog = ({ open, setOpen }) => {
             sx={{ mb: 3 }}
           />
           <DateTimePicker
+            id="eventDate"
+            name="eventDate"
             label="Event Date"
             views={["year", "month", "day", "hours", "minutes", "seconds"]}
+            defaultValue={tomorrow}
+            disablePast
           />
         </DialogContent>
         <DialogActions>
