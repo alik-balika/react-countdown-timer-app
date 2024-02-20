@@ -12,7 +12,7 @@ const NUMBER_OF_MILLISECONDS_IN_AN_HOUR =
 const NUMBER_OF_MILLISECONDS_IN_A_MINUTE =
   NUMBER_OF_MILLISECONDS_IN_A_SECOND * 60;
 
-const Event = ({ event }) => {
+const Event = ({ event, onDelete }) => {
   const daysRemaining = (difference) => {
     return Math.floor(difference / NUMBER_OF_MILLISECONDS_IN_A_DAY);
   };
@@ -56,6 +56,7 @@ const Event = ({ event }) => {
           minutes: 0,
           seconds: 0,
         });
+        clearInterval(interval);
         return;
       }
 
@@ -91,7 +92,12 @@ const Event = ({ event }) => {
             <TimeDisplay type="Seconds" time={timeLeft.seconds} />
           </Stack>
         </Box>
-        <IconButton aria-label="delete" color="secondary" size="large">
+        <IconButton
+          aria-label="delete"
+          color="secondary"
+          size="large"
+          onClick={onDelete}
+        >
           <DeleteIcon sx={{ fontSize: 40 }} />
         </IconButton>
       </Box>
@@ -101,6 +107,7 @@ const Event = ({ event }) => {
 
 Event.propTypes = {
   event: PropTypes.object.isRequired,
+  onDelete: PropTypes.func.isRequired,
 };
 
 export default Event;

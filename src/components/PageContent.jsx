@@ -9,6 +9,12 @@ const PageContent = () => {
   const [open, setOpen] = useState(false);
   const [events, setEvents] = useState([]);
 
+  const handleEventDelete = (index) => {
+    const updatedEvents = [...events];
+    updatedEvents.splice(index, 1);
+    setEvents(updatedEvents);
+  };
+
   return (
     <Box>
       <Box sx={{ backgroundColor: "#f5f5f5", padding: 3 }}>
@@ -45,8 +51,14 @@ const PageContent = () => {
         </Typography>
       ) : (
         <Box sx={{ mt: 4 }}>
-          {events.map((event) => {
-            return <Event key={event.name} event={event} />;
+          {events.map((event, index) => {
+            return (
+              <Event
+                key={event.name}
+                event={event}
+                onDelete={() => handleEventDelete(index)}
+              />
+            );
           })}
         </Box>
       )}
