@@ -4,10 +4,11 @@ import EditCalendarIcon from "@mui/icons-material/EditCalendar";
 
 import CreateEventDialog from "./CreateEventDialog";
 import Event from "./Event";
+import { useLocalStorage } from "../useLocalStorage";
 
 const PageContent = () => {
   const [open, setOpen] = useState(false);
-  const [events, setEvents] = useState([]);
+  const [events, setEvents] = useLocalStorage("events", []);
 
   const handleEventDelete = (index) => {
     const updatedEvents = [...events];

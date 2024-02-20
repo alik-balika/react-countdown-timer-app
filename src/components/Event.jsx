@@ -14,27 +14,39 @@ const NUMBER_OF_MILLISECONDS_IN_A_MINUTE =
 
 const Event = ({ event, onDelete }) => {
   const daysRemaining = (difference) => {
-    return Math.floor(difference / NUMBER_OF_MILLISECONDS_IN_A_DAY);
+    return Math.max(
+      Math.floor(difference / NUMBER_OF_MILLISECONDS_IN_A_DAY),
+      0
+    );
   };
 
   const hoursRemaining = (difference) => {
-    return Math.floor(
-      (difference % NUMBER_OF_MILLISECONDS_IN_A_DAY) /
-        NUMBER_OF_MILLISECONDS_IN_AN_HOUR
+    return Math.max(
+      Math.floor(
+        (difference % NUMBER_OF_MILLISECONDS_IN_A_DAY) /
+          NUMBER_OF_MILLISECONDS_IN_AN_HOUR
+      ),
+      0
     );
   };
 
   const minutesRemaining = (difference) => {
-    return Math.floor(
-      (difference % NUMBER_OF_MILLISECONDS_IN_AN_HOUR) /
-        NUMBER_OF_MILLISECONDS_IN_A_MINUTE
+    return Math.max(
+      Math.floor(
+        (difference % NUMBER_OF_MILLISECONDS_IN_AN_HOUR) /
+          NUMBER_OF_MILLISECONDS_IN_A_MINUTE
+      ),
+      0
     );
   };
 
   const secondsRemaining = (difference) => {
-    return Math.floor(
-      (difference % NUMBER_OF_MILLISECONDS_IN_A_MINUTE) /
-        NUMBER_OF_MILLISECONDS_IN_A_SECOND
+    return Math.max(
+      Math.floor(
+        (difference % NUMBER_OF_MILLISECONDS_IN_A_MINUTE) /
+          NUMBER_OF_MILLISECONDS_IN_A_SECOND
+      ),
+      0
     );
   };
 
@@ -50,13 +62,8 @@ const Event = ({ event, onDelete }) => {
       const difference = new Date(event.date) - Date.now();
 
       if (difference <= 0) {
-        setTimeLeft({
-          days: 0,
-          hours: 0,
-          minutes: 0,
-          seconds: 0,
-        });
         clearInterval(interval);
+        alert("Countdown to " + event.name + " is done!");
         return;
       }
 
